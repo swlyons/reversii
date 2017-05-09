@@ -15,16 +15,87 @@ class Board():
         return True
 
     def get_score(self):
-        pass
-
-    def get_possible_sub_games(self):
-        pass
+        return np.sum(self.game)
+    
+    def get_possible_sub_games(self, player_number):
+        
+        possible_moves = self.get_possible_sub_moves(player_number)
+        possible_games = []
+        
+        for eachMove in possible_moves:
+            newboard = Board(len(self.game), len(self.game[0]), self.game)
+            newboard.make_move(eachMove, player_number)
+            possible_games.append(newboard)
+        return possible_games
+        
 
     def _valid_move(self, move, player_number):
         if self.game[move[0]][move[1]] is not 0:
             return False
-        
 
+        rowt = move[0]-1
+        colt = move[1]
+        while rowt >= 0 and self.game[rowt][colt] is not 0:
+            if self.game[rowt][colt] == player_number:
+                return True
+            rowt=rowt-1
+        
+        rowt = move[0]+1
+        colt = move[1]
+        while rowt < len(self.game) and self.game[rowt][colt] is not 0:
+            if self.game[rowt][colt] == player_number:
+                return True
+            rowt=rowt+1
+
+        rowt = move[0]
+        colt = move[1]-1
+        while colt >= 0 and self.game[rowt][colt] is not 0:
+            if self.game[rowt][colt] == player_number:
+                return True
+            colt=colt-1
+        
+        rowt = move[0]
+        colt = move[1]+1
+        while colt < len(self.game[0]) and self.game[rowt][colt] is not 0:
+            if self.game[rowt][colt] == player_number:
+                return True
+            colt=colt+1
+        
+        
+        rowt = move[0]-1
+        colt = move[1]-1
+        while rowt >= 0 and colt >= 0 and self.game[rowt][colt] is not 0:
+            if self.game[rowt][colt] == player_number:
+                return True
+            rowt=rowt-1
+            colt=colt-1
+        
+        rowt = move[0]+1
+        colt = move[1]-1
+        while colt >= 0 and rowt < len(self.game) and self.game[rowt][colt] is not 0:
+            if self.game[rowt][colt] == player_number:
+                return True
+            rowt=rowt+1
+            colt=colt-1
+
+        rowt = move[0]-1
+        colt = move[1]+1
+        while rowt >= 0 and colt < len(self.game[0]) and self.game[rowt][colt] is not 0:
+            if self.game[rowt][colt] == player_number:
+                return True
+            rowt=rowt-1
+            colt=colt+1
+        
+        rowt = move[0]+1
+        colt = move[1]+1
+        while rowt < len(self.game) and colt < len(self.game[0]) and self.game[rowt][colt] is not 0:
+            if self.game[rowt][colt] == player_number:
+                return True
+            rowt=rowt-1
+            colt=colt+1
+        
+        return False
+            
 
     def get_possible_sub_moves(self, player_number):
         possible_moves = []
@@ -37,6 +108,108 @@ class Board():
     def make_move(self, position, player_number):
         print (self.game)
         self.game[position[0]][position[1]] = int(player_number)
+        
+        rowt = move[0]-1
+        colt = move[1]
+        while rowt >= 0 and self.game[rowt][colt] is not 0:
+            if self.game[rowt][colt] == player_number:
+                rowt=rowt+1
+                while rowt < move[0]:
+                    self.game[rowt][colt] = player_number
+                    rowt=rowt+1
+                break
+            rowt=rowt-1
+        
+        rowt = move[0]+1
+        colt = move[1]
+        while rowt < len(self.game) and self.game[rowt][colt] is not 0:
+            if self.game[rowt][colt] == player_number:
+                rowt=rowt-1
+                while rowt> move[0]:
+                    self.game[rowt][colt] = player_number
+                    rowt=rowt-1
+                break
+            rowt=rowt+1
+
+        rowt = move[0]
+        colt = move[1]-1
+        while colt >= 0 and self.game[rowt][colt] is not 0:
+            if self.game[rowt][colt] == player_number:
+                colt = colt+1
+                while colt<move[1]:
+                    self.game[rowt][colt] = player_number
+                    colt = colt+1
+                break
+            colt=colt-1
+        
+        rowt = move[0]
+        colt = move[1]+1
+        while colt < len(self.game[0]) and self.game[rowt][colt] is not 0:
+            if self.game[rowt][colt] == player_number:
+                colt = colt - 1
+                while colt > move[1]:
+                    self.game[rowt][colt] = player_number
+                    colt = colt - 1
+                break
+            colt=colt+1
+        
+        
+        rowt = move[0]-1
+        colt = move[1]-1
+        while rowt >= 0 and colt >= 0 and self.game[rowt][colt] is not 0:
+            if self.game[rowt][colt] == player_number:
+                rowt=rowt+1
+                colt=colt+1
+                while rowt < move[0]:
+                    self.game[rowt][colt] = player_number
+                    rowt=rowt+1
+                    colt=colt+1
+                break
+            rowt=rowt-1
+            colt=colt-1
+        
+        rowt = move[0]+1
+        colt = move[1]-1
+        while colt >= 0 and rowt < len(self.game) and self.game[rowt][colt] is not 0:
+            if self.game[rowt][colt] == player_number:
+                rowt = rowt-1
+                colt = colt+1
+                while move[0]<rowt:
+                    self.game[rowt][colt] = player_number
+                    rowt = rowt-1
+                    colt = colt+1
+                break
+            rowt=rowt+1
+            colt=colt-1
+
+        rowt = move[0]-1
+        colt = move[1]+1
+        while rowt >= 0 and colt < len(self.game[0]) and self.game[rowt][colt] is not 0:
+            if self.game[rowt][colt] == player_number:
+                rowt=rowt+1
+                colt=colt-1
+                while rowt < move[0]:
+                    self.game[rowt][colt] = player_number
+                    rowt=rowt+1
+                    colt=colt-1
+                break
+            rowt=rowt-1
+            colt=colt+1
+        
+        rowt = move[0]+1
+        colt = move[1]+1
+        while rowt < len(self.game) and colt < len(self.game[0]) and self.game[rowt][colt] is not 0:
+            if self.game[rowt][colt] == player_number:
+                rowt = rowt - 1
+                colt = colt - 1
+                while rowt > move[0]:
+                    self.game[rowt][colt] = player_number
+                    rowt = rowt - 1
+                    colt = colt - 1
+                break
+            rowt=rowt+1
+            colt=colt+1
+        
         print('finish')
 
     def print_board(self):

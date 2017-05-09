@@ -6,7 +6,8 @@
  * alpha beta tree
 
 ### Sam
- * is valid sub move
- * create a sub game
- * return score
- * end game(who won)
+ * is valid sub move - done
+ * make move - done
+ * create a sub game - done
+ * return score - done
+ * end game(who won) - done

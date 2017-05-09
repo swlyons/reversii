@@ -38,7 +38,16 @@ while not gameOver:
     turn_number+=1
     if changed:
         gameOver = False
+    
+if board.get_score() < 0:
+    print 'Player 1 (black) wins!'
 
+elif board.get_score() > 0:
+    print 'Player 2 (white) wins!'
+
+else:
+    print 'TIE GAME!'
+    
 # players = [HumanPlayer(), ComputerPlayer()]
 
 # turn = 0
