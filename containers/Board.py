@@ -1,3 +1,4 @@
+import curses
 
 import numpy as np
 
@@ -30,7 +31,7 @@ class Board():
         
 
     def valid_move(self, move, player_number, initializing):        
-        if move[0] < 0 or move[1] < 0 or move[0] >= len(game) or move[1] >= len(game[0]) or not self.game[move[0]][move[1]] == 0:
+        if move[0] < 0 or move[1] < 0 or move[0] >= len(self.game) or move[1] >= len(self.game[0]) or not self.game[move[0]][move[1]] == 0:
             return False
 
         if initializing:
@@ -116,7 +117,6 @@ class Board():
             for col in range(self.get_size()[1]):
                 if self.valid_move((row, col), player_number, initializing):
                     possible_moves.append((row, col))
-        print possible_moves
         return possible_moves
 
     def make_move(self, move, player_number):
@@ -224,7 +224,28 @@ class Board():
             rowt=rowt+1
             colt=colt+1
 
-    def print_board(self):
+    def print_board(self, player_number=None, last_move=(1,1), initializing=False):
+        def get_user_input(prompt='Invalid, try again'):
+            y,x = last_move
+            # curses.noecho()
+            curses.noecho()
+            stdscr.keypad(1)
+            possible_moves = self.get_possible_sub_moves(player_number, initializing)
+            while True:
+                curses.flash()
+                curses.setsyx((y + 1),(x + 1) * 2)
+                curses.doupdate()
+                c = stdscr.getch()
+                if c == curses.KEY_LEFT:
+                    x = max(x -1,0)
+                elif c == curses.KEY_RIGHT:
+                    x = min(x + 1, len(self.game) - 1)
+                elif c == curses.KEY_UP:
+                    y = max(y-1,0)
+                elif c == curses.KEY_DOWN:
+                    y = min(y+1, len(self.game[0])-1)
+                elif c == curses.KEY_ENTER or c == 10 or c == 13:
+                    return(y,x)
         def get_char(value):
             if value == 1:
                 return 'w'
@@ -233,11 +254,20 @@ class Board():
             else: 
                 return '-'
         column_numbers = range(0, len(self.game[0]))
-        print(self.game)
-        print('  {}'.format(' '.join([str(a) for a in column_numbers])))
-        i = 0
-        for row in self.game:
+        stdscr = curses.initscr()
+        
+        stdscr.clear()
+        stdscr.addstr(0, 0, '  {}'.format(' '.join([str(a) for a in column_numbers])))
+        
+        for index, row in enumerate(self.game):
             row_chars = [get_char(value) for value in row]
-            print('{} {}'.format(i, ' '.join(row_chars)))
-            i = i + 1
-        pass
+            stdscr.addstr(index + 1, 0, '{} {}'.format(index, ' '.join(row_chars)))
+        if player_number is not None:
+            stdscr.addstr(len(self.game), 0, 'player {}\'s turn'.format(get_char(player_number)))
+        stdscr.refresh()
+        # stdscr.curs_set(1)
+        input = get_user_input()
+        if player_number is not None:
+            stdscr.addstr(len(self.game), 0, 'player {}\'s turn'.format(get_char(player_number * -1)))
+        stdscr.refresh()
+        return input     
