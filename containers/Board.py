@@ -42,28 +42,28 @@ class Board():
         
         rowt = move[0]-1
         colt = move[1]
-        while rowt >= 0 and self.game[rowt][colt] is not 0:
+        while rowt >= 0 and not self.game[rowt][colt] == 0:
             if self.game[rowt][colt] == player_number:
                 return True
             rowt=rowt-1
         
         rowt = move[0]+1
         colt = move[1]
-        while rowt < len(self.game) and self.game[rowt][colt] is not 0:
+        while rowt < len(self.game) and not self.game[rowt][colt] == 0:
             if self.game[rowt][colt] == player_number:
                 return True
             rowt=rowt+1
 
         rowt = move[0]
         colt = move[1]-1
-        while colt >= 0 and self.game[rowt][colt] is not 0:
+        while colt >= 0 and not self.game[rowt][colt] == 0:
             if self.game[rowt][colt] == player_number:
                 return True
             colt=colt-1
         
         rowt = move[0]
         colt = move[1]+1
-        while colt < len(self.game[0]) and self.game[rowt][colt] is not 0:
+        while colt < len(self.game[0]) and not self.game[rowt][colt] == 0:
             if self.game[rowt][colt] == player_number:
                 return True
             colt=colt+1
@@ -71,7 +71,7 @@ class Board():
         
         rowt = move[0]-1
         colt = move[1]-1
-        while rowt >= 0 and colt >= 0 and self.game[rowt][colt] is not 0:
+        while rowt >= 0 and colt >= 0 and not self.game[rowt][colt] == 0:
             if self.game[rowt][colt] == player_number:
                 return True
             rowt=rowt-1
@@ -79,7 +79,7 @@ class Board():
         
         rowt = move[0]+1
         colt = move[1]-1
-        while colt >= 0 and rowt < len(self.game) and self.game[rowt][colt] is not 0:
+        while colt >= 0 and rowt < len(self.game) and not self.game[rowt][colt] == 0:
             if self.game[rowt][colt] == player_number:
                 return True
             rowt=rowt+1
@@ -87,7 +87,7 @@ class Board():
 
         rowt = move[0]-1
         colt = move[1]+1
-        while rowt >= 0 and colt < len(self.game[0]) and self.game[rowt][colt] is not 0:
+        while rowt >= 0 and colt < len(self.game[0]) and not self.game[rowt][colt] == 0:
             if self.game[rowt][colt] == player_number:
                 return True
             rowt=rowt-1
@@ -95,10 +95,10 @@ class Board():
         
         rowt = move[0]+1
         colt = move[1]+1
-        while rowt < len(self.game) and colt < len(self.game[0]) and self.game[rowt][colt] is not 0:
+        while rowt < len(self.game) and colt < len(self.game[0]) and not self.game[rowt][colt] == 0:
             if self.game[rowt][colt] == player_number:
                 return True
-            rowt=rowt-1
+            rowt=rowt+1
             colt=colt+1
         
         return False
@@ -118,7 +118,7 @@ class Board():
         
         rowt = move[0]-1
         colt = move[1]
-        while rowt >= 0 and self.game[rowt][colt] is not 0:
+        while rowt >= 0 and not self.game[rowt][colt] == 0:
             if self.game[rowt][colt] == player_number:
                 rowt=rowt+1
                 while rowt < move[0]:
@@ -129,7 +129,7 @@ class Board():
         
         rowt = move[0]+1
         colt = move[1]
-        while rowt < len(self.game) and self.game[rowt][colt] is not 0:
+        while rowt < len(self.game) and not self.game[rowt][colt] == 0:
             if self.game[rowt][colt] == player_number:
                 rowt=rowt-1
                 while rowt> move[0]:
@@ -140,7 +140,7 @@ class Board():
 
         rowt = move[0]
         colt = move[1]-1
-        while colt >= 0 and self.game[rowt][colt] is not 0:
+        while colt >= 0 and not self.game[rowt][colt] == 0:
             if self.game[rowt][colt] == player_number:
                 colt = colt+1
                 while colt<move[1]:
@@ -151,7 +151,7 @@ class Board():
         
         rowt = move[0]
         colt = move[1]+1
-        while colt < len(self.game[0]) and self.game[rowt][colt] is not 0:
+        while colt < len(self.game[0]) and not self.game[rowt][colt] == 0:
             if self.game[rowt][colt] == player_number:
                 colt = colt - 1
                 while colt > move[1]:
@@ -163,7 +163,7 @@ class Board():
         
         rowt = move[0]-1
         colt = move[1]-1
-        while rowt >= 0 and colt >= 0 and self.game[rowt][colt] is not 0:
+        while rowt >= 0 and colt >= 0 and not self.game[rowt][colt] == 0:
             if self.game[rowt][colt] == player_number:
                 rowt=rowt+1
                 colt=colt+1
@@ -177,7 +177,7 @@ class Board():
         
         rowt = move[0]+1
         colt = move[1]-1
-        while colt >= 0 and rowt < len(self.game) and self.game[rowt][colt] is not 0:
+        while colt >= 0 and rowt < len(self.game) and not self.game[rowt][colt] == 0:
             if self.game[rowt][colt] == player_number:
                 rowt = rowt-1
                 colt = colt+1
@@ -191,7 +191,7 @@ class Board():
 
         rowt = move[0]-1
         colt = move[1]+1
-        while rowt >= 0 and colt < len(self.game[0]) and self.game[rowt][colt] is not 0:
+        while rowt >= 0 and colt < len(self.game[0]) and not self.game[rowt][colt] == 0:
             if self.game[rowt][colt] == player_number:
                 rowt=rowt+1
                 colt=colt-1
@@ -205,7 +205,7 @@ class Board():
         
         rowt = move[0]+1
         colt = move[1]+1
-        while rowt < len(self.game) and colt < len(self.game[0]) and self.game[rowt][colt] is not 0:
+        while rowt < len(self.game) and colt < len(self.game[0]) and not self.game[rowt][colt] == 0:
             if self.game[rowt][colt] == player_number:
                 rowt = rowt - 1
                 colt = colt - 1
