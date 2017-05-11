@@ -2,6 +2,8 @@
 
 import sys, os, time, curses
 
+from argparse import ArgumentParser
+
 import numpy as np
 
 from containers.Board import Board
@@ -15,45 +17,47 @@ from containers.Players import HumanPlayer, ComputerPlayer
 #     stdscr.addstr(1, 0, "hello {}".format(x))
 #     stdscr.refresh()
 #     time.sleep(1)
-gameOver = False
+def play_game(players):
+    gameOver = False
 
-players = []
-players.append(HumanPlayer(player_number=-1))
-players.append(HumanPlayer(player_number=1))
-turn_number = 0
-board = Board()
-
-
-while not gameOver:
-    gameOver = True
-    #player 1's turn
-    board, changed = players[0].do_turn(board, initializing=turn_number<4)
-    turn_number+=1
-    if changed:
-        gameOver = False
+    players = []
+    players.append(HumanPlayer(player_number=-1))
+    players.append(HumanPlayer(player_number=1))
+    turn_number = 0
+    board = Board()
 
 
-    #player 2's turn
-    board, changed = players[1].do_turn(board, initializing=turn_number<4)
-    turn_number+=1
-    if changed:
-        gameOver = False
+    while not gameOver:
+        gameOver = True
+        #player 1's turn
+        board, changed = players[0].do_turn(board, initializing=turn_number<4)
+        turn_number+=1
+        if changed:
+            gameOver = False
+
+
+        #player 2's turn
+        board, changed = players[1].do_turn(board, initializing=turn_number<4)
+        turn_number+=1
+        if changed:
+            gameOver = False
+        
+    if board.get_score() < 0:
+        print 'Player 1 (black) wins!'
+
+    elif board.get_score() > 0:
+        print 'Player 2 (white) wins!'
+
+    else:
+        print 'TIE GAME!'
+        
+    # players = [HumanPlayer(), ComputerPlayer()]
+
+    # turn = 0
+    # while True:
+    #     players[turn % 2].get_turn()
+    #     turn = turn + 1
+    #     if end_of_game():
+    #         break
+    # do stuff
     
-if board.get_score() < 0:
-    print 'Player 1 (black) wins!'
-
-elif board.get_score() > 0:
-    print 'Player 2 (white) wins!'
-
-else:
-    print 'TIE GAME!'
-    
-# players = [HumanPlayer(), ComputerPlayer()]
-
-# turn = 0
-# while True:
-#     players[turn % 2].get_turn()
-#     turn = turn + 1
-#     if end_of_game():
-#         break
-# do stuff
