@@ -22,7 +22,7 @@ def play_game(players):
 
     players = []
     players.append(HumanPlayer(player_number=-1))
-    players.append(HumanPlayer(player_number=1))
+    players.append(ComputerPlayer(player_number=1))
     turn_number = 0
     board = Board()
 

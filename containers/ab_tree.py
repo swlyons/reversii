@@ -1,9 +1,10 @@
 
 
 class ABNode:
-    def __init__(self, board):
+    def __init__(self, board, root=False):
         self.board = board
         self.max_child = None
+        self.root = root
 
     # def find_optimal_board(self, max_depth):
     #     if max_depth == self.depth and not self.visited:
@@ -18,18 +19,18 @@ class ABNode:
     def find_max_score(self, alpha, beta, depth, player_number):
         # TODO: check for end of game
         new_depth = depth - 1
-        if new_depth == 0:
+        if depth == 0:
             return self.board.get_score() * player_number
         else:
             v = float("-inf")
             _alpha = alpha
-            sub_games = self.board.get_possible_sub_games(player_number)
+            sub_games = self.board.get_possible_sub_games(player_number, False)
             if len(sub_games) == 0:
                 return ABNode(self.board).find_min_score(alpha, beta, new_depth, player_number * -1)
             for child_board in sub_games:
                 v = max(v, ABNode(child_board).find_min_score(_alpha, beta, new_depth, player_number * -1))
-                if _alpha <= v:
-                    self.max_child == child_board
+                if _alpha <= v and self.root:
+                    self.max_child = child_board
                 _alpha = max(_alpha, v)
                 if _alpha >= beta:
                     break
@@ -39,12 +40,12 @@ class ABNode:
     def find_min_score(self, alpha, beta, depth, player_number):
         # TODO: check for end of game
         new_depth = depth - 1
-        if new_depth == 0:
+        if depth == 0:
             return self.board.get_score() * player_number
         else:
             v = float("inf")
             _beta = beta
-            sub_games = self.board.get_possible_sub_games(player_number)
+            sub_games = self.board.get_possible_sub_games(player_number, False)
             if len(sub_games) == 0:
                 return ABNode(self.board).find_min_score(alpha, beta, new_depth, player_number * -1)
             for child_board in sub_games:
@@ -57,7 +58,7 @@ class ABNode:
 
 class ABTree:
     def __init__(self, current_board, max_depth=6):
-        self.root = ABNode(current_board)
+        self.root = ABNode(current_board, root=True)
         self.max_depth = max_depth
 
     def get_optmal_move(self, player_number):

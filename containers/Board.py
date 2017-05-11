@@ -7,7 +7,7 @@ class Board():
         if game is None:
             self.game = np.zeros((width, height), dtype=np.int)
         else:
-            self.game = game
+            self.game = np.copy(game)
 
     def get_size(self):
         return (len(self.game), len(self.game[0]))
@@ -45,6 +45,7 @@ class Board():
         colt = move[1]
         if rowt >= 0 and self.game[rowt][colt] == player_number * -1:
             while rowt >= 0 and not self.game[rowt][colt] == 0:
+                # print 'a'
                 if self.game[rowt][colt] == player_number:
                     return True
                 rowt=rowt-1
@@ -53,6 +54,7 @@ class Board():
         colt = move[1]
         if rowt < len(self.game) and self.game[rowt][colt] == player_number * -1:
             while rowt < len(self.game) and not self.game[rowt][colt] == 0:
+                # print 'b'
                 if self.game[rowt][colt] == player_number:
                     return True
                 rowt=rowt+1
@@ -61,6 +63,7 @@ class Board():
         colt = move[1]-1
         if colt >= 0 and self.game[rowt][colt] == player_number * -1:
             while colt >= 0 and not self.game[rowt][colt] == 0:
+                # print 'c'
                 if self.game[rowt][colt] == player_number:
                     return True
                 colt=colt-1
@@ -69,6 +72,7 @@ class Board():
         colt = move[1]+1
         if colt < len(self.game[0]) and self.game[rowt][colt] == player_number * -1:                
             while colt < len(self.game[0]) and not self.game[rowt][colt] == 0:
+                # print 'd'
                 if self.game[rowt][colt] == player_number:
                     return True
                 colt=colt+1
@@ -77,6 +81,7 @@ class Board():
         colt = move[1]-1
         if rowt >= 0 and colt >= 0 and self.game[rowt][colt] == player_number * -1:                
             while rowt >= 0 and colt >= 0 and not self.game[rowt][colt] == 0:
+                # print 'e'
                 if self.game[rowt][colt] == player_number:
                     return True
                 rowt=rowt-1
@@ -86,6 +91,7 @@ class Board():
         colt = move[1]-1
         if colt >= 0 and rowt < len(self.game) and self.game[rowt][colt] == player_number * -1:                
             while colt >= 0 and rowt < len(self.game) and not self.game[rowt][colt] == 0:
+                # print 'f'
                 if self.game[rowt][colt] == player_number:
                     return True
                 rowt=rowt+1
@@ -95,15 +101,17 @@ class Board():
         colt = move[1]+1
         if rowt >= 0 and colt < len(self.game[0]) and self.game[rowt][colt] == player_number * -1:                
             while rowt >= 0 and colt < len(self.game[0]) and not self.game[rowt][colt] == 0:
+                # print 'g'
                 if self.game[rowt][colt] == player_number:
                     return True
-            rowt=rowt-1
-            colt=colt+1
+                rowt=rowt-1
+                colt=colt+1
         
         rowt = move[0]+1
         colt = move[1]+1
         if rowt < len(self.game) and colt < len(self.game[0]) and self.game[rowt][colt] == player_number * -1:                        
             while rowt < len(self.game) and colt < len(self.game[0]) and not self.game[rowt][colt] == 0:
+                # print 'h'
                 if self.game[rowt][colt] == player_number:
                     return True
                 rowt=rowt+1

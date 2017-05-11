@@ -41,7 +41,12 @@ class ComputerPlayer():
         self.player_number = player_number
 
     def do_turn(self, board, initializing=False):
-        if not board.can_move(self.player_number):
+        if not board.can_move(self.player_number, initializing):
             return (board, False)
-        tree = ABTree(board, max_depth=self.max_depth)
-        return(tree.get_optmal_move(self.player_number), True)
+        if initializing:
+            move = board.get_possible_sub_moves(self.player_number, True)[0]
+            board.make_move(move, self.player_number)
+            return(board, True)
+        else:
+            tree = ABTree(board, max_depth=self.max_depth)
+            return(tree.get_optmal_move(self.player_number), True)
