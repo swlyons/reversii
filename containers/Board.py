@@ -12,7 +12,7 @@ class Board():
         return (len(self.game), len(self.game[0]))
 
     def can_move(self, player_number):
-        return True
+        return len(get_possible_sub_moves(player_number)) > 0
 
     def get_score(self):
         return np.sum(self.game)
