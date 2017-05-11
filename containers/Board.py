@@ -94,8 +94,8 @@ class Board():
         colt = move[1]+1
         if rowt >= 0 and colt < len(self.game[0]) and self.game[rowt][colt] == player_number * -1:                
             while rowt >= 0 and colt < len(self.game[0]) and not self.game[rowt][colt] == 0:
-            if self.game[rowt][colt] == player_number:
-                return True
+                if self.game[rowt][colt] == player_number:
+                    return True
             rowt=rowt-1
             colt=colt+1
         
