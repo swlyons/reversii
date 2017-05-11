@@ -1,23 +1,15 @@
+import time
+
+from containers.ab_tree import ABTree
+
 class HumanPlayer():
     def __init__(self, player_number=0):
         self.player_number = player_number
         self.initializing = True
+        self.last_move = (0,0)
 
-#    def _validate_input(self, new_position):
-#        valid = False
-#        if(not board.game[x][y] == 0):
-#            return False
-#        if self.initializing:
-#            x, y = new_position
-#            game_x, game_y = self.board.get_size()
-#            if (x==game_x/2 or x==game_x/2 + 1) and (y==game_y/2 or y==game_y/2):
-#                valid = True
-#            return valid
-        
-#        if (x, y) not in board.get_possible_sub_moves(self.player_number, initializing):
-#            valid = False
-        
-#        return valid
+    def _validate_input(self, new_position):
+        return self.board.valid_move(new_position, self.player_number, self.initializing)
 
     def _get_input(self):
         input = raw_input('where do you want to go: ')
@@ -34,18 +26,22 @@ class HumanPlayer():
         self.initializing = initializing
         if not initializing and not board.can_move(self.player_number, initializing):
             return (board, False)
-        board.print_board()
-        print 'Player ',(self.player_number+1)/2+1,' turn'
-        input = self._get_input()
-        while not board.valid_move(input, self.player_number, initializing):
-            print 'That is not a valid move, try again'
-            input = self._get_input()
+        # print()
+        valid = False
+        while not valid:
+            input = board.print_board(last_move=self.last_move, player_number=self.player_number, initializing=initializing)
+            valid = self._validate_input(input)
+        self.last_move = input
         board.make_move(input, self.player_number)
         return(board, True)
 
 class ComputerPlayer():
-    def __init__(self):
-        pass
+    def __init__(self, player_number=0, max_depth=6):
+        self.max_depth = max_depth
+        self.player_number = player_number
 
     def do_turn(self, board, initializing=False):
-        pass
+        if not board.can_move(self.player_number):
+            return (board, False)
+        tree = ABTree(board, max_depth=self.max_depth)
+        return(tree.get_optmal_move(self.player_number), True)
