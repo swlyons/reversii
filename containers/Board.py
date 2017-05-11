@@ -29,8 +29,8 @@ class Board():
         return possible_games
         
 
-    def valid_move(self, move, player_number, initializing):
-        if not self.game[move[0]][move[1]] == 0:
+    def valid_move(self, move, player_number, initializing):        
+        if move[0] < 0 or move[1] < 0 or move[0] >= len(game) or move[1] >= len(game[0]) or not self.game[move[0]][move[1]] == 0:
             return False
 
         if initializing:
@@ -110,6 +110,7 @@ class Board():
             for col in range(self.get_size()[1]):
                 if self.valid_move((row, col), player_number, initializing):
                     possible_moves.append((row, col))
+        print possible_moves
         return possible_moves
 
     def make_move(self, move, player_number):
