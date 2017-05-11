@@ -4,22 +4,22 @@ import numpy as np
 class Board():
     def __init__(self, width=8, height=8, game=None):
         if game is None:
-            self.game = np.zeros((width, height))
+            self.game = np.zeros((width, height), dtype=np.int)
         else:
             self.game = game
 
     def get_size(self):
         return (len(self.game), len(self.game[0]))
 
-    def can_move(self, player_number):
-        return len(get_possible_sub_moves(player_number)) > 0
+    def can_move(self, player_number, initializing):
+        return len(self.get_possible_sub_moves(player_number, initializing)) > 0
 
     def get_score(self):
         return np.sum(self.game)
     
-    def get_possible_sub_games(self, player_number):
+    def get_possible_sub_games(self, player_number, initializing):
         
-        possible_moves = self.get_possible_sub_moves(player_number)
+        possible_moves = self.get_possible_sub_moves(player_number, initializing)
         possible_games = []
         
         for eachMove in possible_moves:
@@ -29,10 +29,17 @@ class Board():
         return possible_games
         
 
-    def _valid_move(self, move, player_number):
-        if self.game[move[0]][move[1]] is not 0:
+    def valid_move(self, move, player_number, initializing):
+        if not self.game[move[0]][move[1]] == 0:
             return False
 
+        if initializing:
+            if not (move[0] == len(self.game)/2 or move[0] == len(self.game)/2 - 1):
+                return False
+            if not (move[1] == len(self.game[0])/2 or move[1] == len(self.game[0])/2 - 1):
+                return False
+            return True
+        
         rowt = move[0]-1
         colt = move[1]
         while rowt >= 0 and self.game[rowt][colt] is not 0:
@@ -97,17 +104,17 @@ class Board():
         return False
             
 
-    def get_possible_sub_moves(self, player_number):
+    def get_possible_sub_moves(self, player_number, initializing):
         possible_moves = []
         for row in range(self.get_size()[0]):
             for col in range(self.get_size()[1]):
-                if self._valid_move((row, col), player_number):
+                if self.valid_move((row, col), player_number, initializing):
                     possible_moves.append((row, col))
         return possible_moves
 
-    def make_move(self, position, player_number):
-        print (self.game)
-        self.game[position[0]][position[1]] = int(player_number)
+    def make_move(self, move, player_number):
+        
+        self.game[move[0]][move[1]] = int(player_number)
         
         rowt = move[0]-1
         colt = move[1]
@@ -209,8 +216,6 @@ class Board():
                 break
             rowt=rowt+1
             colt=colt+1
-        
-        print('finish')
 
     def print_board(self):
         def get_char(value):
