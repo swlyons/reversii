@@ -16,7 +16,7 @@ from containers.Players import HumanPlayer, ComputerPlayer
 #     stdscr.refresh()
 #     time.sleep(1)
 gameOver = False
-
+# 56 to 8 first game we win.  
 players = []
 players.append(HumanPlayer(player_number=-1))
 players.append(ComputerPlayer(player_number=1))

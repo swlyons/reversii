@@ -36,11 +36,12 @@ class HumanPlayer():
         return(board, True)
 
 class ComputerPlayer():
-    def __init__(self, player_number=0, max_depth=6):
+    def __init__(self, player_number=0, max_depth=3):
         self.max_depth = max_depth
         self.player_number = player_number
 
     def do_turn(self, board, initializing=False):
+        board.print_board(get_input=False)
         if not board.can_move(self.player_number, initializing):
             return (board, False)
         if initializing:

@@ -47,7 +47,7 @@ class ABNode:
             _beta = beta
             sub_games = self.board.get_possible_sub_games(player_number, False)
             if len(sub_games) == 0:
-                return ABNode(self.board).find_min_score(alpha, beta, new_depth, player_number * -1)
+                return ABNode(self.board).find_max_score(alpha, beta, new_depth, player_number * -1)
             for child_board in sub_games:
                 v = min(v, ABNode(child_board).find_max_score(alpha, _beta, new_depth, player_number * -1))
                 _beta = min(_beta, v)

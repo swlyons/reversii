@@ -232,7 +232,7 @@ class Board():
             rowt=rowt+1
             colt=colt+1
 
-    def print_board(self, player_number=None, last_move=(1,1), initializing=False):
+    def print_board(self, player_number=None, last_move=(1,1), initializing=False, get_input=True):
         def get_user_input(prompt='Invalid, try again'):
             y,x = last_move
             # curses.noecho()
@@ -240,7 +240,7 @@ class Board():
             stdscr.keypad(1)
             possible_moves = self.get_possible_sub_moves(player_number, initializing)
             while True:
-                curses.flash()
+                # curses.flash()
                 curses.setsyx((y + 1),(x + 1) * 2)
                 curses.doupdate()
                 c = stdscr.getch()
@@ -271,11 +271,13 @@ class Board():
             row_chars = [get_char(value) for value in row]
             stdscr.addstr(index + 1, 0, '{} {}'.format(index, ' '.join(row_chars)))
         if player_number is not None:
-            stdscr.addstr(len(self.game), 0, 'player {}\'s turn'.format(get_char(player_number)))
+            stdscr.addstr(len(self.game) + 1, 0, 'player {}\'s turn'.format(get_char(player_number)))
         stdscr.refresh()
         # stdscr.curs_set(1)
-        input = get_user_input()
-        if player_number is not None:
-            stdscr.addstr(len(self.game), 0, 'player {}\'s turn'.format(get_char(player_number * -1)))
-        stdscr.refresh()
+        input = None
+        if get_input:
+            input = get_user_input()
+            if player_number is not None:
+                stdscr.addstr(len(self.game ) + 1, 0, 'player {}\'s turn'.format(get_char(player_number * -1)))
+            stdscr.refresh()
         return input     
